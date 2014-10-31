@@ -95,7 +95,7 @@ public class PentahoDatasourceManager implements IDatasourceManager {
     }
 
   public void setRepositoryManager(IRepositoryManager irm) {
-    
+
   }
 
   private Map<String, SaikuDatasource> loadDatasources() {
