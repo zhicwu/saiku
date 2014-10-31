@@ -34,7 +34,7 @@ import javax.jcr.RepositoryException;
 /**
  * Created by bugg on 31/10/14.
  */
-public class SimpleRepositoryManager implements IRepositoryManager{
+public class SimpleRepositoryManager implements IRepositoryManager {
 
 
   public void init() {

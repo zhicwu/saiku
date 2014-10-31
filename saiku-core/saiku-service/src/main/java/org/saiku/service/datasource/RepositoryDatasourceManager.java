@@ -19,7 +19,10 @@ package org.saiku.service.datasource;
 import org.saiku.database.dto.MondrianSchema;
 import org.saiku.datasources.connection.RepositoryFile;
 import org.saiku.datasources.datasource.SaikuDatasource;
-import org.saiku.repository.*;
+import org.saiku.repository.AclEntry;
+import org.saiku.repository.DataSource;
+import org.saiku.repository.IRepositoryManager;
+import org.saiku.repository.IRepositoryObject;
 import org.saiku.service.importer.LegacyImporter;
 import org.saiku.service.importer.impl.LegacyImporterImpl;
 import org.saiku.service.user.UserService;
@@ -91,9 +94,10 @@ public class RepositoryDatasourceManager implements IDatasourceManager {
   }
 
   @NotNull
-  public void setRepositoryManager(IRepositoryManager irm){
+  public void setRepositoryManager(IRepositoryManager irm) {
     this.irm = irm;
   }
+
   @NotNull
   public SaikuDatasource addDatasource(@NotNull SaikuDatasource datasource) throws Exception {
     DataSource ds = new DataSource(datasource);
