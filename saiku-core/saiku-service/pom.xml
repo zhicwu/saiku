@@ -11,6 +11,27 @@
     <name>saiku - services</name>
     <build>
         <plugins>
+                        <plugin>
+                            <groupId>net.thucydides.maven.plugins</groupId>
+                            <artifactId>maven-thucydides-plugin</artifactId>
+                            <version>0.9.229</version>
+                            <executions>
+                                <execution>
+                                    <id>thucydides-reports</id>
+                                    <phase>post-integration-test</phase>
+                                    <goals>
+                                        <goal>aggregate</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>net.thucydides.plugins.jira</groupId>
+                                    <artifactId>thucydides-jira-requirements-provider</artifactId>
+                                    <version>0.9.228</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -139,6 +160,10 @@
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>org.swift.common</groupId>
+            <artifactId>jira-soap</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.saiku</groupId>
             <artifactId>saiku-query</artifactId>

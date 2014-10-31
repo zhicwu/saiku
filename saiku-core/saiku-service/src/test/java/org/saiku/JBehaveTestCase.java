@@ -18,10 +18,39 @@ package org.saiku;
 
 import net.thucydides.jbehave.ThucydidesJUnitStories;
 
+import org.jbehave.core.configuration.Configuration;
+import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.reporters.Format;
+import org.jbehave.core.reporters.StoryReporterBuilder;
+import org.jbehave.core.steps.InjectableStepsFactory;
+import org.jbehave.core.steps.InstanceStepsFactory;
+
+import java.util.LinkedList;
+
 /**
  * Created by bugg on 02/05/14.
  */
 public class JBehaveTestCase extends ThucydidesJUnitStories {
+  public LinkedList<Object> stepDefinitions = new LinkedList<Object>();
+
+  @Override
+  public Configuration configuration() {
+    return new MostUsefulConfiguration()
+        .useStoryLoader(new JiraStoryLoader("SC-10"))
+        .useStoryReporterBuilder(
+            new StoryReporterBuilder()
+                .withRelativeDirectory("")
+                .withDefaultFormats()
+                .withFormats(Format.CONSOLE, Format.TXT,
+                    Format.XML, Format.HTML));
+  }
+
+  @Override
+  public InjectableStepsFactory stepsFactory() {
+    return new InstanceStepsFactory(configuration(), this.stepDefinitions);
+  }
+
   public JBehaveTestCase() {
+    this.stepDefinitions.add(new JBehaveTestCase());
   }
 }
