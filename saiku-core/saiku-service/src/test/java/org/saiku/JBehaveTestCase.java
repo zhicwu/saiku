@@ -36,7 +36,7 @@ public class JBehaveTestCase extends ThucydidesJUnitStories {
   @Override
   public Configuration configuration() {
     return new MostUsefulConfiguration()
-        .useStoryLoader(new JiraStoryLoader("SC-10"))
+        .useStoryLoader(new JiraStoryLoader("SKU-1147"))
         .useStoryReporterBuilder(
             new StoryReporterBuilder()
                 .withRelativeDirectory("")
@@ -51,6 +51,6 @@ public class JBehaveTestCase extends ThucydidesJUnitStories {
   }
 
   public JBehaveTestCase() {
-    this.stepDefinitions.add(new JBehaveTestCase());
+    this.stepDefinitions.add(new OlapDataSourceStepsdef());
   }
 }

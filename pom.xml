@@ -81,7 +81,15 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
+        <repository>
+            <id>atlassian</id>
+            <name>Atlassian Public</name>
+            <layout>default</layout>
+            <url>https://maven.atlassian.com/content/repositories/atlassian-public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
@@ -916,6 +924,16 @@
                 <groupId>com.atlassian.clover</groupId>
                 <artifactId>clover</artifactId>
                 <version>4.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.jira</groupId>
+                <artifactId>jira-rest-java-client-api</artifactId>
+                <version>2.0.0-m29</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.jira</groupId>
+                <artifactId>jira-rest-java-client-core</artifactId>
+                <version>2.0.0-m29</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

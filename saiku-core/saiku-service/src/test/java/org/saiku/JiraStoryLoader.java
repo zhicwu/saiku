@@ -16,11 +16,14 @@
 
 package org.saiku;
 
-import org.jbehave.core.io.StoryLoader;
-import org.swift.common.soap.jira.JiraSoapServiceService;
-import org.swift.common.soap.jira.JiraSoapServiceServiceLocator;
-import org.swift.common.soap.jira.RemoteIssue;
+import com.atlassian.jira.rest.client.api.JiraRestClient;
+import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
+import com.atlassian.jira.rest.client.api.domain.Issue;
+import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
 
+import org.jbehave.core.io.StoryLoader;
+
+import java.net.URI;
 
 public class JiraStoryLoader implements StoryLoader {
 
@@ -32,14 +35,16 @@ public class JiraStoryLoader implements StoryLoader {
 
  public String loadStoryAsText(String issueId) {
   try {
+    URI jiraServerUri = new URI("http://jira.meteorite.bi");
+    JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
+    final JiraRestClient restClient = factory.createWithBasicHttpAuthentication(jiraServerUri, "", "");
 
-    JiraSoapServiceService jiraProxy = new JiraSoapServiceServiceLocator();
 
-   String loginToken = jiraProxy.getJirasoapserviceV2().login("bugg_tb", "1111111111");
-   RemoteIssue issue = jiraProxy.getJirasoapserviceV2().getIssue(loginToken, jiraId);
+    Issue issue = restClient.getIssueClient().getIssue(jiraId).claim();
+   
    return issue.getDescription();
   } catch (Throwable e) {
-   ;
+   System.out.println("error"+e.getLocalizedMessage());
   }
   return null;
  }
