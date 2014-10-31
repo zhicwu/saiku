@@ -60,21 +60,7 @@
                     </executions> -->
             </plugin>
 
-            <plugin>
-                <groupId>com.qmino</groupId>
-                <artifactId>miredot-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>restdoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <licence>UHJvamVjdHxvcmcuc2Fpa3Uuc2Fpa3Utd2VifDIwMTYtMTAtMjh8dHJ1ZSNNQ3dDRkdkTnZwSlNHWnVBT3VOeHVFWElTeXMxUGlrUEFoUlBsSWdkS0lzWDVuY08vNVYwbHl6QnhEUG9pdz09</licence>                     <!-- insert other configuration here (optional) -->
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
     <dependencies>
