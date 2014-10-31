@@ -21,6 +21,7 @@ import org.saiku.datasources.connection.RepositoryFile;
 import org.saiku.datasources.datasource.SaikuDatasource;
 import org.saiku.datasources.datasource.SaikuDatasource.Type;
 import org.saiku.repository.AclEntry;
+import org.saiku.repository.IRepositoryManager;
 import org.saiku.repository.IRepositoryObject;
 import org.saiku.service.user.UserService;
 import org.saiku.service.util.exception.SaikuServiceException;
@@ -117,6 +118,10 @@ public class ClassPathResourceDatasourceManager implements IDatasourceManager {
   }
 
   public void unload() {
+
+  }
+
+  public void setRepositoryManager(IRepositoryManager irm) {
 
   }
 

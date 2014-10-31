@@ -54,5 +54,6 @@ public class CreateDataSourceTestCase extends ThucydidesJUnitStories {
 
   public CreateDataSourceTestCase() {
     this.stepDefinitions.add(new CreateDataSourceSteps());
+    this.stepDefinitions.add(new DataSteps());
   }
 }

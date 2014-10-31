@@ -20,6 +20,7 @@ import org.saiku.database.dto.MondrianSchema;
 import org.saiku.datasources.connection.RepositoryFile;
 import org.saiku.datasources.datasource.SaikuDatasource;
 import org.saiku.repository.AclEntry;
+import org.saiku.repository.IRepositoryManager;
 import org.saiku.repository.IRepositoryObject;
 import org.saiku.service.user.UserService;
 
@@ -37,6 +38,7 @@ public interface IDatasourceManager {
 
   void unload();
 
+  void setRepositoryManager(IRepositoryManager irm);
 
   SaikuDatasource addDatasource(SaikuDatasource datasource) throws Exception;
 

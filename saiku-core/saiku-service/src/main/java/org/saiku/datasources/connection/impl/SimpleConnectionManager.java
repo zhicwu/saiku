@@ -95,6 +95,7 @@ public class SimpleConnectionManager extends AbstractConnectionManager {
           return con;
         }
       } catch (Exception e) {
+        System.out.println(e);
         LOG.error("Could not get connection", e);
       }
 

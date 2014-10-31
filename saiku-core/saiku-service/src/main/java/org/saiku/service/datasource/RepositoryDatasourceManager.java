@@ -40,7 +40,8 @@ import javax.jcr.RepositoryException;
  * A Datasource Manager for the Saiku Repository API layer.
  */
 public class RepositoryDatasourceManager implements IDatasourceManager {
-  private final IRepositoryManager irm = JackRabbitRepositoryManager.getJackRabbitRepositoryManager();
+  private IRepositoryManager irm = null;
+
   private final Map<String, SaikuDatasource> datasources =
       Collections.synchronizedMap(new HashMap<String, SaikuDatasource>());
   private UserService userService;
@@ -89,6 +90,10 @@ public class RepositoryDatasourceManager implements IDatasourceManager {
     irm.shutdown();
   }
 
+  @NotNull
+  public void setRepositoryManager(IRepositoryManager irm){
+    this.irm = irm;
+  }
   @NotNull
   public SaikuDatasource addDatasource(@NotNull SaikuDatasource datasource) throws Exception {
     DataSource ds = new DataSource(datasource);

@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.saiku.datasource;
+package org.saiku.datasource.create;
 
 import org.saiku.datasources.connection.IConnectionManager;
 import org.saiku.datasources.connection.impl.SimpleConnectionManager;
 import org.saiku.datasources.datasource.SaikuDatasource;
 import org.saiku.helper.DatabaseHelper;
+import org.saiku.helper.SimpleRepositoryManager;
 import org.saiku.olap.discover.OlapMetaExplorer;
 import org.saiku.olap.dto.SaikuConnection;
 import org.saiku.olap.util.exception.SaikuOlapException;
@@ -28,6 +29,7 @@ import org.saiku.service.datasource.IDatasourceManager;
 import org.saiku.service.datasource.RepositoryDatasourceManager;
 import org.saiku.service.olap.OlapDiscoverService;
 import org.saiku.service.olap.ThinQueryService;
+import org.saiku.service.user.UserService;
 import org.saiku.service.util.exception.SaikuServiceException;
 
 import net.thucydides.core.annotations.Step;
@@ -56,12 +58,13 @@ public class DataSteps {
   private DatasourceService datasourceService;
   private ThinQueryService thinQueryService;
   private List<String> data;
+  private UserService userService;
 
 
   private void setup() throws Exception {
     DatabaseHelper db = new DatabaseHelper();
     db.setup();
-    InputStream inputStream = getClass().getResourceAsStream("../connection.properties");
+    InputStream inputStream = getClass().getResourceAsStream("../../connection.properties");
     TESTPROPS.load(inputStream); //$NON-NLS-1$
 
 
@@ -73,6 +76,9 @@ public class DataSteps {
         new RepositoryDatasourceManager();
     //InputStream inputStream= DataSteps.class.getResourceAsStream("connection.properties");
     TESTPROPS.load(inputStream);
+    this.userService = new UserService();
+    this.datasourceManager.setUserService(userService);
+    this.datasourceManager.setRepositoryManager(new SimpleRepositoryManager());
     this.datasourceManager.load();
     this.connectionManager = new SimpleConnectionManager();
     this.connectionManager.setDataSourceManager(datasourceManager);
@@ -91,7 +97,7 @@ public class DataSteps {
     setup();
 
 
-    List<SaikuDatasource> l = new ArrayList<SaikuDatasource>();
+    /*List<SaikuDatasource> l = new ArrayList<SaikuDatasource>();
 
 
     if (data != null) {
@@ -100,7 +106,7 @@ public class DataSteps {
       }
     }
 
-    datasourceManager.addDatasources(l);
+    datasourceManager.addDatasources(l);*/
 
   }
 
@@ -112,7 +118,7 @@ public class DataSteps {
 
   @Step
   public void loadNewDataSources() throws Exception {
-    setup();
+    //setup();
     List<SaikuDatasource> l = new ArrayList<SaikuDatasource>();
 
     if (data != null) {
