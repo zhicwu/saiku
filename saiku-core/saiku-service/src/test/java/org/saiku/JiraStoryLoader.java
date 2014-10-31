@@ -19,33 +19,38 @@ package org.saiku;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.JiraRestClientFactory;
 import com.atlassian.jira.rest.client.api.domain.Issue;
+import com.atlassian.jira.rest.client.auth.AnonymousAuthenticationHandler;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
 
 import org.jbehave.core.io.StoryLoader;
 
 import java.net.URI;
 
+/**
+ * Jira Story Loader
+ */
 public class JiraStoryLoader implements StoryLoader {
 
- protected String jiraId = "";
+  protected String jiraId = "";
 
- public JiraStoryLoader(String id) {
-  jiraId = id;
- }
-
- public String loadStoryAsText(String issueId) {
-  try {
-    URI jiraServerUri = new URI("http://jira.meteorite.bi");
-    JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
-    final JiraRestClient restClient = factory.createWithBasicHttpAuthentication(jiraServerUri, "", "");
-
-
-    Issue issue = restClient.getIssueClient().getIssue(jiraId).claim();
-   
-   return issue.getDescription();
-  } catch (Throwable e) {
-   System.out.println("error"+e.getLocalizedMessage());
+  public JiraStoryLoader(String id) {
+    jiraId = id;
   }
-  return null;
- }
+
+  public String loadStoryAsText(String issueId) {
+    try {
+      URI jiraServerUri = new URI("http://jira.meteorite.bi");
+      JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
+      AnonymousAuthenticationHandler h = new AnonymousAuthenticationHandler();
+      final JiraRestClient restClient = factory.create(jiraServerUri, h);
+
+
+      Issue issue = restClient.getIssueClient().getIssue(jiraId).claim();
+
+      return issue.getDescription();
+    } catch (Throwable e) {
+      System.out.println("error" + e.getLocalizedMessage());
+    }
+    return null;
+  }
 }

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.saiku;
+package org.saiku.datasource.create;
+
+import org.saiku.JiraStoryLoader;
 
 import net.thucydides.jbehave.ThucydidesJUnitStories;
 
@@ -30,7 +32,7 @@ import java.util.LinkedList;
 /**
  * Created by bugg on 02/05/14.
  */
-public class JBehaveTestCase extends ThucydidesJUnitStories {
+public class CreateDataSourceTestCase extends ThucydidesJUnitStories {
   public LinkedList<Object> stepDefinitions = new LinkedList<Object>();
 
   @Override
@@ -50,7 +52,7 @@ public class JBehaveTestCase extends ThucydidesJUnitStories {
     return new InstanceStepsFactory(configuration(), this.stepDefinitions);
   }
 
-  public JBehaveTestCase() {
-    this.stepDefinitions.add(new OlapDataSourceStepsdef());
+  public CreateDataSourceTestCase() {
+    this.stepDefinitions.add(new CreateDataSourceSteps());
   }
 }

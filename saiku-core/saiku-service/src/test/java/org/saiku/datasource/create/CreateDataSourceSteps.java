@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.saiku;
+package org.saiku.datasource.create;
 
 
 import org.saiku.datasource.DataSteps;
@@ -29,18 +29,17 @@ import java.util.List;
 /**
  * Story for lookup_datasources.story
  */
-class OlapDataSourceStepsdef {
+public class CreateDataSourceSteps {
 
 
   @Steps
-  public
   DataSteps data;
   private List<SaikuConnection> connections;
   private SaikuConnection ds;
 
   @Given("there is a H2 Foodmart instance available")
-  public void givenThereIsAFoodmartInstanceAvailable(){
-    System.out.println("here");
+  public void givenThereIsAFoodmartInstanceAvailable() {
+//Dont do anything.
   }
 
 }
