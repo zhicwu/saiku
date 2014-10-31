@@ -15,17 +15,15 @@
  */
 package org.saiku.plugin;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import mondrian.olap.MondrianProperties;
-import mondrian.olap.Util;
-import mondrian.rolap.RolapConnectionProperties;
-import mondrian.util.Pair;
+import org.saiku.database.dto.MondrianSchema;
+import org.saiku.datasources.connection.ISaikuConnection;
+import org.saiku.datasources.connection.RepositoryFile;
+import org.saiku.datasources.datasource.SaikuDatasource;
+import org.saiku.repository.AclEntry;
+import org.saiku.repository.IRepositoryManager;
+import org.saiku.repository.IRepositoryObject;
+import org.saiku.service.datasource.IDatasourceManager;
+import org.saiku.service.user.UserService;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -36,15 +34,15 @@ import org.pentaho.platform.engine.core.system.PentahoSystem;
 import org.pentaho.platform.plugin.action.mondrian.catalog.IMondrianCatalogService;
 import org.pentaho.platform.plugin.action.mondrian.catalog.MondrianCatalog;
 import org.pentaho.platform.util.messages.LocaleHelper;
-import org.saiku.datasources.connection.ISaikuConnection;
-import org.saiku.datasources.datasource.SaikuDatasource;
-import org.saiku.service.datasource.IDatasourceManager;
-import org.saiku.datasources.connection.RepositoryFile;
-import org.saiku.database.dto.MondrianSchema;
-import org.saiku.service.user.UserService;
-import org.saiku.repository.AclEntry;
-import org.saiku.repository.IRepositoryObject;
+
+import java.util.*;
+
 import javax.jcr.RepositoryException;
+
+import mondrian.olap.MondrianProperties;
+import mondrian.olap.Util;
+import mondrian.rolap.RolapConnectionProperties;
+import mondrian.util.Pair;
 
 public class PentahoDatasourceManager implements IDatasourceManager {
 
@@ -96,7 +94,11 @@ public class PentahoDatasourceManager implements IDatasourceManager {
 
     }
 
-    private Map<String, SaikuDatasource> loadDatasources() {
+  public void setRepositoryManager(IRepositoryManager irm) {
+    
+  }
+
+  private Map<String, SaikuDatasource> loadDatasources() {
         try {
             this.session = PentahoSessionHolder.getSession();
 
