@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-public class SessionService implements ISessionService {
+public class SessionService implements ISessionService,Serializable {
 
 	private static final Logger log = LoggerFactory.getLogger(SessionService.class);
 
