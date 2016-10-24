@@ -214,24 +214,26 @@ var buildUniqueName = function(level, name) {
 };
 
 SaikuOlapQueryHelper.prototype.addtoSelection = function(membername, level){
-  if(level.level.selection.members === undefined){
-    level.selection.members = [];
-  }
+	if(level!=undefined) {
+		if (level.level.selection.members === undefined) {
+			level.selection.members = [];
+		}
 
-  var found = false;
-  _.each(level.level.selection.members, function(m){
-    var mUniqueName = buildUniqueName(level, m.name);
-    if (buildUniqueName(level, m.name) === buildUniqueName(level, membername)) {
-      found = true;
-    }
-  });
+		var found = false;
+		_.each(level.level.selection.members, function (m) {
+			var mUniqueName = buildUniqueName(level, m.name);
+			if (buildUniqueName(level, m.name) === buildUniqueName(level, membername)) {
+				found = true;
+			}
+		});
 
-  if(!found) {
-    level.level.selection.members.push({
-      uniqueName: buildUniqueName(level, membername),
-      caption: membername
-    })
-  }
+		if (!found) {
+			level.level.selection.members.push({
+				uniqueName: buildUniqueName(level, membername),
+				caption: membername
+			})
+		}
+	}
 };
 
 SaikuOlapQueryHelper.prototype.includeCmember = function(hierarchy, level){
