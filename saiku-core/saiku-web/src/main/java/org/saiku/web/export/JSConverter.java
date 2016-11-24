@@ -1,5 +1,6 @@
 package org.saiku.web.export;
 
+import org.mozilla.javascript.JavaScriptException;
 import org.saiku.web.rest.objects.resultset.QueryResult;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,7 +25,7 @@ public class JSConverter {
 
     private static void useJavascriptToConvertToHtml(QueryResult queryResult, StringWriter stringWriter) throws IOException {
         Context javascriptContext = createJavascriptContext();
-        Scriptable globalScope = javascriptContext.initStandardObjects();
+        Scriptable globalScope = javascriptContext.initStandardObjects(null);
         loadJavascriptScripts(javascriptContext, globalScope);
         loadDataIntoJsContext(queryResult, globalScope);
         loadStringWriterIntoJsContext(stringWriter, globalScope);
@@ -37,12 +38,16 @@ public class JSConverter {
             "eval('var cellset = ' + data); \n" +
                 "var renderer = new SaikuTableRenderer(); \n" +
                 "var html = renderer.render(cellset, { wrapContent : " + false + " }); out.write(html);";
-        javascriptContext.evaluateString(globalScope, code, "<mem>", 1, null);
+        try {
+            javascriptContext.evaluateString(globalScope, code, "<mem>", 1, null);
+        } catch (JavaScriptException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void loadStringWriterIntoJsContext(StringWriter stringWriter, Scriptable globalScope) {
         // load StringWriter into JS environment so JS has a place to write to
-        Object wrappedOut = Context.javaToJS(stringWriter, globalScope);
+        Object wrappedOut = Context.toObject(stringWriter, globalScope);
         ScriptableObject.putProperty(globalScope, "out", wrappedOut);
     }
 
@@ -50,7 +55,7 @@ public class JSConverter {
         // load data of queryResult into JS environment
         ObjectMapper objectMapper = new ObjectMapper();
         String data = objectMapper.writeValueAsString(queryResult);
-        Object wrappedQueryResult = Context.javaToJS(data, globalScope);
+        Object wrappedQueryResult = Context.toObject(data, globalScope);
         ScriptableObject.putProperty(globalScope, "data", wrappedQueryResult);
     }
 
@@ -64,11 +69,15 @@ public class JSConverter {
     private static void loadJavascriptScripts(Context javascriptContext, Scriptable globalScope) throws IOException {
         // fetch the .js files and put them on scope of the javascriptContext to be executed
         Reader underscoreReader = new InputStreamReader(JSConverter.class.getResourceAsStream("underscore.js"));
-        javascriptContext.evaluateReader(globalScope, underscoreReader, "underscore.js", 1, null);
         Reader saikuRendererReader = new InputStreamReader(JSConverter.class.getResourceAsStream("SaikuRenderer.js"));
-        javascriptContext.evaluateReader(globalScope, saikuRendererReader, "SaikuRenderer.js", 1, null);
-        String result = IOUtils.toString(JSConverter.class.getResourceAsStream("SaikuTableRenderer.js"));
-        javascriptContext.evaluateString(globalScope, result, "SaikuTableRenderer.js", 1, null);
+        try {
+            javascriptContext.evaluateReader(globalScope, underscoreReader, "underscore.js", 1, null);
+            javascriptContext.evaluateReader(globalScope, saikuRendererReader, "SaikuRenderer.js", 1, null);
+            String result = IOUtils.toString(JSConverter.class.getResourceAsStream("SaikuTableRenderer.js"));
+            javascriptContext.evaluateString(globalScope, result, "SaikuTableRenderer.js", 1, null);
+        } catch (JavaScriptException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static String appendSaikuCommercialIfNecessary(String content) {
