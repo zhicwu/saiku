@@ -3,11 +3,11 @@
 	<parent>
 		<artifactId>saiku</artifactId>
 		<groupId>org.saiku</groupId>
-		<version>3.1-SNAPSHOT</version>
+		<version>3.14</version>
 	</parent>
 	<artifactId>saiku-bi-platform-plugin</artifactId>
 	<packaging>jar</packaging>
-	<version>3.1-SNAPSHOT</version>
+	<version>3.14</version>
 	<name>saikuee biserver plugin</name>
 
 	<properties>
@@ -133,7 +133,7 @@
 								</artifactItem>
 								<artifactItem>
 									<groupId>pentaho</groupId>
-									<artifactId>cpf-pentaho5</artifactId>
+									<artifactId>cpf-pentaho</artifactId>
 									<outputDirectory>target/dist/saiku/lib</outputDirectory>
 								</artifactItem>
 								<!-- Batik/SVG -->
